@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ArtFrame | الإطار الفني للمبدعين</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <style>
+    :root {
+      --bg: #FDFBF7; --surface: rgba(255, 248, 240, 0.6); --surface-border: rgba(107, 78, 61, 0.15);
+      --text: #2a1e18; --text-secondary: #634b3e; --accent: #b08968; --shadow: 0 30px 60px -15px rgba(59, 43, 36, 0.15);
+      --btn-bg: #2a1e18; --btn-text: #FDFBF7; --hero-gradient: linear-gradient(135deg, #2a1e18 0%, #b08968 100%);
+      --orb-1: rgba(176, 137, 104, 0.2); --orb-2: rgba(212, 163, 115, 0.2);
+      --facebook: #1877F2; --instagram: #E4405F; --tiktok-bg: #000000; --tiktok-text: #ffffff;
+    }
+    [data-theme="dark"] {
+      --bg: #0d0908; --surface: rgba(20, 14, 12, 0.6); --surface-border: rgba(201, 168, 124, 0.15);
+      --text: #FDFBF7; --text-secondary: #c4b09d; --accent: #dca868; --shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.7);
+      --btn-bg: #dca868; --btn-text: #0d0908; --hero-gradient: linear-gradient(135deg, #ffffff 0%, #dca868 100%);
+      --orb-1: rgba(220, 168, 104, 0.1); --orb-2: rgba(166, 114, 60, 0.1);
+      --tiktok-bg: #1f1f1f; --tiktok-text: #ffffff;
+    }
+    html { scroll-behavior: smooth; }
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+    body { background: var(--bg); color: var(--text); font-family: 'Cairo', sans-serif; overflow-x: hidden; cursor: none; transition: background 0.6s ease, color 0.6s ease; position: relative; }
+    body::after { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('https://grainy-gradients.vercel.app/noise.svg'); opacity: 0.05; pointer-events: none; z-index: 9999; }
+    
+    .bg-orbs { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; overflow: hidden; z-index: -1; pointer-events: none; }
+    .orb { position: absolute; border-radius: 50%; filter: blur(80px); animation: float 15s infinite alternate ease-in-out; }
+    .orb-1 { width: 40vw; height: 40vw; background: var(--orb-1); top: -10%; right: -10%; }
+    .orb-2 { width: 50vw; height: 50vw; background: var(--orb-2); bottom: -20%; left: -10%; animation-delay: -5s; }
+
+    .cursor, .cursor-follower { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 10000; opacity: 0; }
+    .cursor { width: 10px; height: 10px; background: var(--accent); border-radius: 50%; transition: opacity 0.3s, transform 0.05s, width 0.3s, height 0.3s; }
+    .cursor-follower { width: 40px; height: 40px; border: 1.5px solid var(--accent); border-radius: 50%; transition: opacity 0.3s, transform 0.15s, background 0.3s, width 0.3s, height 0.3s; }
+    
+    @media (max-width: 992px), (hover: none) and (pointer: coarse) {
+      body, a, .btn, .btn-submit, .btn-whatsapp, .theme-switch, .glass-card, .social-box, .menu-toggle, .ai-btn, .ai-chip, #aiClose, .suggestion-input { cursor: auto !important; }
+      .cursor, .cursor-follower { display: none !important; }
+    }
+
+    .navbar { position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); background: rgba(var(--bg), 0.7); border-bottom: 1px solid var(--surface-border); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; transition: 0.4s; }
+    .logo { font-family: 'Inter', sans-serif; font-weight: 900; font-size: 2rem; letter-spacing: -1px; background: var(--hero-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .nav-links { display: flex; gap: 20px; align-items: center; }
+    .nav-links a { color: var(--text); text-decoration: none; font-weight: 700; font-size: 1.1rem; transition: 0.3s; position: relative; }
+    .nav-links a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -6px; left: 50%; transform: translateX(-50%); background-color: var(--accent); transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-left { display: flex; align-items: center; gap: 20px; }
+    .social-icons-nav { display: flex; gap: 15px; }
+    .social-icons-nav a { color: var(--text); font-size: 1.3rem; transition: 0.3s; }
+    .social-icons-nav a:hover { transform: translateY(-4px) scale(1.1); color: var(--accent); }
+    .menu-toggle { display: none; font-size: 1.6rem; color: var(--text); transition: 0.3s; }
+    @media (min-width: 993px) { .logo { flex: 1; text-align: right; } .nav-links { flex: 1.5; justify-content: center; } .nav-left { flex: 1; justify-content: flex-end; } }
+
+    .container { max-width: 1300px; margin: 0 auto; padding: 0 5%; }
+    section { padding: 120px 0; opacity: 0; transform: translateY(40px); transition: 1s cubic-bezier(0.2, 0.8, 0.2, 1); scroll-margin-top: 80px; }
+    section.visible { opacity: 1; transform: translateY(0); }
+
+    .hero { text-align: center; padding: 180px 0 120px; display: flex; flex-direction: column; align-items: center; }
+    .hero-title { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; margin-bottom: 10px; color: var(--text-secondary); }
+    .hero-subtitle { font-family: 'Inter', sans-serif; font-size: clamp(4rem, 12vw, 9rem); font-weight: 900; line-height: 1; margin-bottom: 30px; background: var(--hero-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1)); }
+    .hero p { font-size: clamp(1.1rem, 2vw, 1.5rem); max-width: 800px; line-height: 1.8; color: var(--text-secondary); margin-bottom: 50px; }
+
+    .btn-group { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+    .btn { padding: 18px 40px; border-radius: 50px; text-decoration: none; font-weight: 800; font-size: 1.1rem; border: none; cursor: none; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: inline-flex; align-items: center; gap: 12px; position: relative; overflow: hidden; z-index: 1; }
+    .btn-primary { background: var(--btn-bg); color: var(--btn-text); border: 2px solid transparent; }
+    .btn-primary:hover { transform: translateY(-5px) scale(1.03); box-shadow: 0 20px 40px rgba(220, 168, 104, 0.3); }
+    .btn-outline { border: 2px solid var(--surface-border); color: var(--text); background: transparent; backdrop-filter: blur(10px); }
+    .btn-outline:hover { background: var(--text); color: var(--bg); border-color: var(--text); transform: translateY(-5px); }
+
+    /* زر الواتساب الخاص بقسم الشراكة */
+    .btn-whatsapp { background: #25D366; color: #ffffff !important; padding: 20px 50px; font-size: 1.3rem; border-radius: 50px; text-decoration: none; display: inline-flex; align-items: center; gap: 15px; font-weight: 800; box-shadow: 0 15px 30px rgba(37, 211, 102, 0.3); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; overflow: hidden; z-index: 1; cursor: none; }
+    .btn-whatsapp::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); transition: all 0.6s ease; z-index: -1; }
+    .btn-whatsapp:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 20px 40px rgba(37, 211, 102, 0.5); }
+    .btn-whatsapp:hover::after { left: 100%; }
+    .btn-whatsapp i { color: #ffffff !important; font-size: 1.8rem; }
+
+    .section-header { text-align: center; margin-bottom: 60px; }
+    .section-header h2 { font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 900; margin-bottom: 15px; }
+    .section-header p { font-size: 1.2rem; color: var(--accent); font-weight: 700; letter-spacing: 1px; }
+
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+    .glass-card { background: var(--surface); border: 1px solid var(--surface-border); border-radius: 30px; padding: 50px 40px; backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); transition: all 0.5s ease; position: relative; overflow: hidden; }
+    .glass-card::before { content: ""; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(to right, transparent, rgba(255,255,255,0.05), transparent); transform: skewX(-20deg); transition: 0.7s; }
+    .glass-card:hover { transform: translateY(-15px); border-color: var(--accent); box-shadow: var(--shadow); }
+    .glass-card:hover::before { left: 150%; }
+    .glass-card i { font-size: 2.8rem; color: var(--accent); margin-bottom: 25px; transition: 0.4s; }
+    .glass-card:hover i { transform: scale(1.2) rotate(5deg); }
+    .glass-card h3 { font-size: 1.6rem; font-weight: 800; margin-bottom: 15px; color: var(--text); }
+    .glass-card p { font-size: 1.1rem; color: var(--text-secondary); line-height: 1.7; }
+
+    .suggestion-form { display: flex; flex-direction: column; gap: 20px; }
+    .suggestion-input { width: 100%; background: transparent; border: 2px solid var(--surface-border); border-radius: 20px; padding: 20px; color: var(--text); font-family: 'Cairo', sans-serif; font-size: 1.1rem; resize: vertical; min-height: 150px; transition: 0.3s; outline: none; cursor: none; }
+    .suggestion-input:focus { border-color: var(--accent); box-shadow: 0 0 20px rgba(176, 137, 104, 0.15); background: rgba(255,255,255,0.02); }
+    .suggestion-input::placeholder { color: var(--text-secondary); opacity: 0.7; }
+
+    .btn-submit { width: 100%; display: flex; justify-content: center; align-items: center; gap: 12px; font-size: 1.2rem; font-weight: 800; font-family: 'Cairo', sans-serif; padding: 18px; border-radius: 20px; border: none; background: var(--hero-gradient); color: var(--bg); cursor: none; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; overflow: hidden; z-index: 1; box-shadow: 0 10px 25px rgba(176, 137, 104, 0.3); }
+    .btn-submit::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); transition: all 0.6s ease; z-index: -1; }
+    .btn-submit:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 20px 40px rgba(176, 137, 104, 0.5); }
+    .btn-submit:hover::after { left: 100%; }
+    .btn-submit i { transition: transform 0.4s ease; }
+    .btn-submit:hover i.fa-paper-plane { transform: translate(4px, -4px) scale(1.1); }
+
+    .social-section { background: var(--surface); border-radius: 40px; padding: 80px 40px; text-align: center; border: 1px solid var(--surface-border); }
+    .social-big-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 50px; }
+    .social-box { flex: 1; min-width: 150px; max-width: 200px; padding: 30px 20px; border-radius: 25px; color: white; text-decoration: none; font-weight: 800; font-size: 1.1rem; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; flex-direction: column; gap: 15px; align-items: center; }
+    .social-box i { font-size: 2.5rem; }
+    .fb { background: var(--facebook); }
+    .ig { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+    .tk { background: var(--tiktok-bg); color: var(--tiktok-text); border: 1px solid rgba(255,255,255,0.1); }
+    .social-box:hover { transform: translateY(-10px) scale(1.05); filter: brightness(1.1); box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
+
+    .theme-switch { background: var(--surface-border); width: 60px; height: 32px; border-radius: 34px; position: relative; border: 1px solid var(--text-secondary); }
+    .theme-switch::before { content: "\f186"; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; width: 24px; height: 24px; background: var(--text); color: var(--bg); border-radius: 50%; top: 3px; left: 3px; transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); display: flex; justify-content: center; align-items: center; font-size: 13px; }
+    [data-theme="light"] .theme-switch::before { content: "\f185"; }
+    [data-theme="dark"] .theme-switch::before { transform: translateX(28px); }
+
+    .glow-red { color: #ff3333; text-shadow: 0 0 30px rgba(255, 51, 51, 0.5); font-weight: 900; font-family: 'Inter', sans-serif; letter-spacing: 2px; }
+
+    .ai-widget { position: fixed; bottom: 30px; right: 30px; z-index: 9999; display: flex; flex-direction: column; align-items: flex-end; }
+    .ai-btn { background: var(--hero-gradient); color: var(--bg); padding: 15px 25px; border-radius: 50px; font-weight: 800; font-size: 1.1rem; display: flex; align-items: center; gap: 10px; box-shadow: 0 10px 25px rgba(176, 137, 104, 0.4); transition: 0.4s; cursor: none; }
+    .ai-btn:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 15px 35px rgba(176, 137, 104, 0.6); }
+    .ai-btn i { font-size: 1.3rem; animation: pulse 2s infinite; }
+    @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.2); opacity: 0.8; } 100% { transform: scale(1); opacity: 1; } }
+
+    .ai-panel { width: 380px; max-width: 90vw; background: var(--surface); border: 1px solid var(--accent); border-radius: 25px; backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); box-shadow: var(--shadow); display: flex; flex-direction: column; overflow: hidden; opacity: 0; pointer-events: none; transform: translateY(20px) scale(0.95); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: absolute; bottom: 70px; right: 0; }
+    .ai-panel.active { opacity: 1; pointer-events: auto; transform: translateY(0) scale(1); }
+    .ai-header { background: rgba(176, 137, 104, 0.15); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--surface-border); }
+    .ai-header h3 { font-size: 1.2rem; display: flex; align-items: center; gap: 10px; color: var(--accent); font-weight: 800; }
+    .ai-header button { background: none; border: none; color: var(--text); font-size: 1.5rem; transition: 0.3s; cursor: none;}
+    .ai-header button:hover { color: #ff3333; transform: rotate(90deg); }
+    .ai-body { padding: 20px; max-height: 350px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
+    .ai-body::-webkit-scrollbar { width: 6px; }
+    .ai-body::-webkit-scrollbar-thumb { background: var(--surface-border); border-radius: 10px; }
+    .ai-message { padding: 12px 18px; border-radius: 20px; font-size: 1rem; line-height: 1.6; max-width: 90%; font-weight: 600; }
+    .ai-message.bot { background: rgba(176, 137, 104, 0.1); color: var(--text); align-self: flex-start; border-bottom-right-radius: 5px; }
+    .ai-message.user { background: var(--accent); color: var(--bg); align-self: flex-end; border-bottom-left-radius: 5px; }
+    .ai-suggestions { padding: 15px 20px; border-top: 1px solid var(--surface-border); display: flex; flex-wrap: wrap; gap: 10px; }
+    .ai-chip { background: var(--bg); border: 1px solid var(--accent); color: var(--text); padding: 8px 15px; border-radius: 20px; font-size: 0.95rem; font-weight: 700; transition: 0.3s; font-family: 'Cairo', sans-serif; cursor: none; }
+    .ai-chip:hover { background: var(--accent); color: var(--bg); transform: translateY(-3px); }
+
+    footer { padding: 80px 5% 40px; border-top: 1px solid var(--surface-border); text-align: center; position: relative; z-index: 10; }
+    @media (max-width: 992px) {
+      .social-icons-nav { display: none; }
+      .menu-toggle { display: block; }
+      .nav-links { position: absolute; top: 100%; right: 0; width: 100%; background: var(--bg); flex-direction: column; padding: 25px 0; gap: 20px; box-shadow: 0 15px 30px rgba(0,0,0,0.1); clip-path: polygon(0 0, 100% 0, 100% 0, 0 0); transition: 0.4s ease-in-out; border-bottom: 1px solid var(--surface-border); }
+      .nav-links.active { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+      .nav-links a { font-size: 1.3rem; }
+      .hero { padding: 120px 0 80px; } .btn-group { flex-direction: column; width: 100%; } .btn { width: 100%; justify-content: center; }
+      section { padding: 80px 0; } .glass-card { padding: 30px 20px; } .social-section { padding: 40px 20px; }
+      .ai-widget { bottom: 20px; right: 20px; } .ai-panel { bottom: 65px; width: 340px; right: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+  </div>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="follower"></div>
+
+  <nav class="navbar">
+    <div class="logo">ArtFrame</div>
+    
+    <div class="nav-links" id="navLinks">
+      <a href="#home">الرئيسية</a>
+      <a href="#services">خدماتنا</a>
+      <a href="#partnership">شراكة النجاح</a>
+      <a href="#social">مجتمعنا</a>
+      <a href="#suggestions">اقتراحاتكم</a>
+      <!-- تم إرجاع رابط قريباً هنا -->
+      <a href="#soon">قريباً</a> 
+    </div>
+
+    <div class="nav-left">
+      <div class="social-icons-nav">
+        <a href="#social" title="فيسبوك"><i class="fab fa-facebook"></i></a>
+        <a href="#social" title="انستجرام"><i class="fab fa-instagram"></i></a>
+        <a href="#social" title="تيك توك"><i class="fab fa-tiktok"></i></a>
+      </div>
+      <div class="theme-switch" id="themeToggle" title="تبديل الإضاءة"></div>
+      <div class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <section class="hero visible" id="home">
+      <div class="hero-title">إطـــار الإبـــداع</div>
+      <div class="hero-subtitle">ArtFrame</div>
+      <p>المجتمع الأول للمبدعين. نصنع قنوات يوتيوب متكاملة، ونصمم هويات بصرية لا تُنسى باحترافية شديدة القوة لتكتسح المنافسة.</p>
+      <div class="btn-group">
+        <a href="https://chat.whatsapp.com/IPwPZlGFmDFG676lMxSTLW" target="_blank" class="btn btn-primary">
+          <i class="fab fa-whatsapp"></i> انضم للمجتمع الآن
+        </a>
+        <a href="#services" class="btn btn-outline">استكشف احترافيتنا</a>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="section-header">
+        <p>ماذا نقدم؟</p>
+        <h2>خدمات باحترافية شديدة القوة</h2>
+      </div>
+      <div class="services-grid">
+        <div class="glass-card">
+          <i class="fas fa-play-circle"></i>
+          <h3>صناعة قنوات يوتيوب</h3>
+          <p>بناء قنوات يوتيوب من الصفر بمستوى احترافي ينافس القنوات الكبرى، مع تخطيط متكامل لشكل ومضمون القناة.</p>
+        </div>
+        <div class="glass-card">
+          <i class="fas fa-chart-line"></i>
+          <h3>تحسين قنوات يوتيوب (SEO)</h3>
+          <p>تحليل دقيق للقناة وتطبيق استراتيجيات السيو (SEO) لزيادة المشاهدات والنمو العضوي السريع.</p>
+        </div>
+        <div class="glass-card">
+          <i class="fas fa-image"></i>
+          <h3>تصميم صور مصغرة (Thumbnails)</h3>
+          <p>صور مصغرة مصممة بعلم النفس البصري، تجذب العين فوراً وترفع معدل النقر (CTR) لأرقام خيالية.</p>
+        </div>
+        <div class="glass-card">
+          <i class="fas fa-pen-nib"></i>
+          <h3>صناعة اللوجوهات والهوية</h3>
+          <p>تصميم شعارات مبتكرة وهويات بصرية كاملة تعكس احترافية مشروعك وتجعله راسخاً في ذهن جمهورك.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- === القسم الجديد: شريكك الدائم (مع زر الواتساب) === -->
+    <section id="partnership" style="text-align: center;">
+      <div class="glass-card" style="max-width: 950px; margin: 0 auto; padding: 70px 40px; border: 2px solid #25D366; background: rgba(37, 211, 102, 0.03);">
+        <h2 style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; margin-bottom: 20px; color: var(--text);">شريكك الدائم في النجاح 🤝</h2>
+        <p style="font-size: 1.3rem; line-height: 1.8; color: var(--text-secondary); margin-bottom: 40px; max-width: 800px; margin-left: auto; margin-right: auto;">
+          لو عايزني أكون شريكك الدائم في أعمالك على يوتيوب، وأتولى الجانب البصري والتقني بالكامل (من تصميم هويات وصور مصغرة إلى السيو وإدارة القناة) عشان تتفرغ إنت للإبداع وصناعة المحتوى.. تواصل معايا فوراً للبدء!
+        </p>
+        <a href="https://wa.me/201003136842" target="_blank" class="btn-whatsapp">
+          <i class="fab fa-whatsapp"></i> تواصل معي الآن للاتفاق
+        </a>
+      </div>
+    </section>
+    <!-- ============================================== -->
+
+    <section id="social">
+      <div class="social-section">
+        <h2 style="font-size: clamp(2rem, 4vw, 2.5rem); margin-bottom: 10px;">كن جزءاً من عائلتنا</h2>
+        <p style="color: var(--text-secondary); font-size: 1.2rem;">تابع حساباتنا الرسمية على جميع المنصات لمحتوى حصري يومي.</p>
+        <div class="social-big-grid">
+          <a href="#" class="social-box fb"><i class="fab fa-facebook-f"></i> Facebook</a>
+          <a href="#" class="social-box ig"><i class="fab fa-instagram"></i> Instagram</a>
+          <a href="#" class="social-box tk"><i class="fab fa-tiktok"></i> TikTok</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="suggestions">
+      <div class="section-header">
+        <p>شاركنا رؤيتك</p>
+        <h2>ماذا تود أن نقدم في المستقبل؟</h2>
+      </div>
+      <div class="glass-card" style="max-width: 700px; margin: 0 auto; padding: 40px;">
+        <form id="suggestionForm" class="suggestion-form">
+          <textarea class="suggestion-input" placeholder="اكتب اقتراحك للخدمات أو المحتوى الذي تحتاجه منا..." required></textarea>
+          <button type="submit" class="btn-submit">
+            <i class="fas fa-paper-plane"></i> إرسال الاقتراح
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <section id="soon" style="text-align: center; padding: 60px 0 120px;">
+      <h2 class="glow-red" style="font-size: clamp(3rem, 8vw, 5rem);">قريباً</h2>
+      <p style="font-size: clamp(1.4rem, 3.5vw, 2rem); margin-top: 10px; font-weight: 800; color: var(--text);">مفاجآت قيد التجهيز لتكتمل باقة احترافيتنا</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1000px; margin: 40px auto 0; text-align: right;">
+        <div class="glass-card" style="padding: 40px;">
+          <i class="fas fa-tv" style="font-size: 2.8rem; color: var(--accent); margin-bottom: 20px;"></i>
+          <h3 style="font-size: 1.6rem; margin-bottom: 15px;">قناة ArtFrame التعليمية</h3>
+          <p style="font-size: 1.1rem; color: var(--text-secondary); line-height: 1.7;">سنطلق قناتنا على يوتيوب قريباً! لنقدم لك <strong>أقوى التريكات</strong> وأسرار صناعة المحتوى، المونتاج، والتصميم باحترافية شديدة تضمن لك التفوق.</p>
+        </div>
+        <div class="glass-card" style="padding: 40px;">
+          <i class="fas fa-film" style="font-size: 2.8rem; color: var(--accent); margin-bottom: 20px;"></i>
+          <h3 style="font-size: 1.6rem; margin-bottom: 15px;">خدمات المونتاج الشاملة</h3>
+          <p style="font-size: 1.1rem; color: var(--text-secondary); line-height: 1.7;">في المستقبل، سنضيف خدمات المونتاج وصناعة الفيديوهات <strong>الطويلة والقصيرة</strong> بستايلات متعددة وجذابة تناسب جميع المنصات وتكتسح الخوارزميات.</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    <div class="logo" style="font-size: 2.5rem; margin-bottom: 20px;">ArtFrame</div>
+    <p style="font-size: 1.1rem; font-weight: 600;">© 2026 جميع الحقوق محفوظة لمجتمع الإطار الفني.</p>
+    <div style="margin-top: 15px; opacity: 0.5; font-size: 0.9rem;">صُنع بشغف واحترافية شديدة القوة</div>
+  </footer>
+
+  <div class="ai-widget">
+    <div class="ai-panel" id="aiPanel">
+      <div class="ai-header">
+        <h3><i class="fas fa-wand-magic-sparkles"></i> ArtFrame AI</h3>
+        <button id="aiClose"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="ai-body" id="aiBody">
+        <div class="ai-message bot">أهلاً بك يا مبدع! ✨ أنا المساعد الذكي. اضغط على أي سؤال بالأسفل لاختصار الطريق ومعرفة ما نقدمه.</div>
+      </div>
+      <div class="ai-suggestions">
+        <button class="ai-chip" data-ans="who">من أنتم؟</button>
+        <button class="ai-chip" data-ans="services">ما هي خدماتكم؟</button>
+        <button class="ai-chip" data-ans="soon">ما القادم؟</button>
+      </div>
+    </div>
+    
+    <div class="ai-btn" id="aiBtn">
+      <i class="fas fa-wand-magic-sparkles"></i>
+      <span>اسأل الذكاء الاصطناعي</span>
+    </div>
+  </div>
+
+  <script>
+    const isTouchDevice = () => { return (('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0) || window.innerWidth <= 992); };
+    const cursor = document.getElementById('cursor'); const follower = document.getElementById('follower'); let isCursorVisible = false;
+
+    if (!isTouchDevice()) {
+      const showCursor = () => { if (!isCursorVisible) { cursor.style.opacity = '1'; follower.style.opacity = '1'; isCursorVisible = true; } };
+      const hideCursor = () => { cursor.style.opacity = '0'; follower.style.opacity = '0'; isCursorVisible = false; };
+      document.addEventListener('mousemove', (e) => { showCursor(); cursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-50%, -50%)`; follower.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-50%, -50%)`; });
+      document.addEventListener('mouseleave', hideCursor); document.addEventListener('mouseenter', showCursor);
+      const interactiveElements = document.querySelectorAll('a, button, .btn, .btn-submit, .btn-whatsapp, .theme-switch, .glass-card, .social-box, .suggestion-input');
+      interactiveElements.forEach(el => {
+        el.addEventListener('mouseenter', () => { follower.style.width = '60px'; follower.style.height = '60px'; follower.style.background = 'rgba(220, 168, 104, 0.2)'; });
+        el.addEventListener('mouseleave', () => { follower.style.width = '40px'; follower.style.height = '40px'; follower.style.background = 'transparent'; });
+      });
+    }
+
+    const themeToggle = document.getElementById('themeToggle'); const html = document.documentElement;
+    themeToggle.addEventListener('click', () => { const currentTheme = html.getAttribute('data-theme'); const newTheme = currentTheme === 'light' ? 'dark' : 'light'; html.setAttribute('data-theme', newTheme); localStorage.setItem('theme', newTheme); });
+    const savedTheme = localStorage.getItem('theme'); if(savedTheme) { html.setAttribute('data-theme', savedTheme); }
+
+    const menuToggle = document.getElementById('menuToggle'); const navLinksContainer = document.getElementById('navLinks'); const menuIcon = menuToggle.querySelector('i');
+    menuToggle.addEventListener('click', () => { navLinksContainer.classList.toggle('active'); if(navLinksContainer.classList.contains('active')) { menuIcon.classList.remove('fa-bars'); menuIcon.classList.add('fa-times'); } else { menuIcon.classList.remove('fa-times'); menuIcon.classList.add('fa-bars'); } });
+    const navLinks = document.querySelectorAll('.nav-links a'); navLinks.forEach(link => { link.addEventListener('click', () => { navLinksContainer.classList.remove('active'); menuIcon.classList.remove('fa-times'); menuIcon.classList.add('fa-bars'); }); });
+
+    const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+    const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } }); }, observerOptions);
+    document.querySelectorAll('section').forEach(section => observer.observe(section));
+
+    const suggestionForm = document.getElementById('suggestionForm');
+    suggestionForm.addEventListener('submit', (e) => {
+      e.preventDefault(); 
+      const submitBtn = suggestionForm.querySelector('.btn-submit');
+      const originalText = submitBtn.innerHTML;
+      const textarea = suggestionForm.querySelector('.suggestion-input');
+      const message = textarea.value;
+
+      const ACCESS_KEY = "7f463fd0-d1df-46a5-9131-04cf43b50205"; 
+
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
+      submitBtn.style.opacity = '0.8';
+      submitBtn.style.pointerEvents = 'none';
+
+      fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({ access_key: ACCESS_KEY, subject: "💡 اقتراح جديد من موقع ArtFrame", message: message, from_name: "زائر من موقع ArtFrame" })
+      })
+      .then(async (response) => {
+          let json = await response.json();
+          if (response.status == 200) {
+              submitBtn.innerHTML = '<i class="fas fa-check-circle"></i> تم إرسال اقتراحك بنجاح!';
+              submitBtn.style.background = '#25D366'; submitBtn.style.color = '#ffffff'; submitBtn.style.opacity = '1'; submitBtn.style.boxShadow = '0 15px 30px rgba(37, 211, 102, 0.4)'; textarea.value = '';
+          } else {
+              submitBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> حدث خطأ!';
+              submitBtn.style.background = '#ff3333'; submitBtn.style.color = '#ffffff'; submitBtn.style.opacity = '1';
+          }
+      })
+      .catch(error => {
+          submitBtn.innerHTML = '<i class="fas fa-wifi"></i> حدث خطأ، تأكد من اتصالك بالإنترنت';
+          submitBtn.style.background = '#ff3333'; submitBtn.style.color = '#ffffff'; submitBtn.style.opacity = '1';
+      })
+      .finally(() => {
+          setTimeout(() => { submitBtn.innerHTML = originalText; submitBtn.style.background = ''; submitBtn.style.color = ''; submitBtn.style.boxShadow = ''; submitBtn.style.pointerEvents = 'auto'; }, 4000);
+      });
+    });
+
+    const aiBtn = document.getElementById('aiBtn'); const aiPanel = document.getElementById('aiPanel'); const aiClose = document.getElementById('aiClose'); const aiBody = document.getElementById('aiBody'); const aiChips = document.querySelectorAll('.ai-chip');
+    const aiResponses = { who: "نحن ArtFrame! المجتمع الأول للمبدعين، نصنع قنوات يوتيوب متكاملة ونصمم هويات بصرية لا تُنسى باحترافية شديدة القوة لتكتسح المنافسة. 🚀", services: "نقدم لك الآتي باحترافية شديدة:<br>1️⃣ صناعة قنوات يوتيوب من الصفر.<br>2️⃣ تحسين السيو (SEO) للقنوات.<br>3️⃣ تصميم صور مصغرة خرافية.<br>4️⃣ تصميم لوجوهات وهويات بصرية كاملة. 🎨", soon: "نجهز لإطلاق قناة يوتيوب ArtFrame التعليمية، بالإضافة إلى توفير خدمات المونتاج وصناعة الفيديوهات (الطويلة والقصيرة) بستايلات متعددة قريباً جداً! 🔥" };
+    aiBtn.addEventListener('click', () => { aiPanel.classList.add('active'); aiBtn.style.transform = 'scale(0)'; setTimeout(() => aiBtn.style.display = 'none', 300); });
+    aiClose.addEventListener('click', () => { aiPanel.classList.remove('active'); aiBtn.style.display = 'flex'; setTimeout(() => aiBtn.style.transform = 'scale(1)', 10); });
+    function typeWriter(text, element, speed = 25) { let i = 0; element.innerHTML = ''; function type() { if (i < text.length) { if (text.substr(i, 4) === '<br>') { element.innerHTML += '<br>'; i += 4; } else { element.innerHTML += text.charAt(i); i++; } aiBody.scrollTop = aiBody.scrollHeight; setTimeout(type, speed); } } type(); }
+    aiChips.forEach(chip => { chip.addEventListener('click', () => { const question = chip.innerText; const answerKey = chip.getAttribute('data-ans'); aiBody.innerHTML += `<div class="ai-message user">${question}</div>`; const botMsg = document.createElement('div'); botMsg.className = 'ai-message bot'; aiBody.appendChild(botMsg); typeWriter(aiResponses[answerKey], botMsg); }); });
+  </script>
+</body>
+</html>
