@@ -17,6 +17,7 @@
       --btn-bg: #2a1e18; --btn-text: #FDFBF7; --hero-gradient: linear-gradient(135deg, #2a1e18 0%, #b08968 100%);
       --orb-1: rgba(176, 137, 104, 0.2); --orb-2: rgba(212, 163, 115, 0.2);
       --facebook: #1877F2; --instagram: #E4405F; --tiktok-bg: #000000; --tiktok-text: #ffffff;
+      --threads-bg: #000000; --threads-text: #ffffff;
     }
     [data-theme="dark"] {
       --bg: #0d0908; --surface: rgba(20, 14, 12, 0.6); --surface-border: rgba(201, 168, 124, 0.15);
@@ -24,6 +25,7 @@
       --btn-bg: #dca868; --btn-text: #0d0908; --hero-gradient: linear-gradient(135deg, #ffffff 0%, #dca868 100%);
       --orb-1: rgba(220, 168, 104, 0.1); --orb-2: rgba(166, 114, 60, 0.1);
       --tiktok-bg: #1f1f1f; --tiktok-text: #ffffff;
+      --threads-bg: #1f1f1f; --threads-text: #ffffff;
     }
     html { scroll-behavior: smooth; }
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
@@ -114,6 +116,7 @@
     .fb { background: var(--facebook); }
     .ig { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
     .tk { background: var(--tiktok-bg); color: var(--tiktok-text); border: 1px solid rgba(255,255,255,0.1); }
+    .th { background: var(--threads-bg); color: var(--threads-text); border: 1px solid rgba(255,255,255,0.1); }
     .social-box:hover { transform: translateY(-10px) scale(1.05); filter: brightness(1.1); box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
 
     .theme-switch { background: var(--surface-border); width: 60px; height: 32px; border-radius: 34px; position: relative; border: 1px solid var(--text-secondary); }
@@ -183,8 +186,9 @@
 
     <div class="nav-left">
       <div class="social-icons-nav">
-        <a href="#social" title="فيسبوك"><i class="fab fa-facebook"></i></a>
-        <a href="#social" title="انستجرام"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.facebook.com/profile.php?id=61589878742135&sk=directory_intro" target="_blank" title="فيسبوك"><i class="fab fa-facebook"></i></a>
+        <a href="https://www.instagram.com/artframe57b/" target="_blank" title="انستجرام"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.threads.com/@artframe57b" target="_blank" title="ثردز"><i class="fab fa-threads"></i></a>
         <a href="#social" title="تيك توك"><i class="fab fa-tiktok"></i></a>
       </div>
       <div class="theme-switch" id="themeToggle" title="تبديل الإضاءة"></div>
@@ -198,7 +202,7 @@
       <div class="hero-subtitle">ArtFrame</div>
       <p>المجتمع الأول للمبدعين. نصنع قنوات يوتيوب متكاملة، ونصمم هويات بصرية لا تُنسى باحترافية شديدة القوة لتكتسح المنافسة.</p>
       <div class="btn-group">
-        <a href="https://chat.whatsapp.com/IPwPZlGFmDFG676lMxSTLW" target="_blank" class="btn btn-primary">
+        <a href="https://chat.whatsapp.com/IPwPZlGFmDFG676lMxSTLW" target="_blank" class="btn-primary btn">
           <i class="fab fa-whatsapp"></i> انضم للمجتمع الآن
         </a>
         <a href="#services" class="btn btn-outline">استكشف احترافيتنا</a>
@@ -253,8 +257,9 @@
         <h2 style="font-size: clamp(2rem, 4vw, 2.5rem); margin-bottom: 10px;">كن جزءاً من عائلتنا</h2>
         <p style="color: var(--text-secondary); font-size: 1.2rem;">تابع حساباتنا الرسمية على جميع المنصات لمحتوى حصري يومي.</p>
         <div class="social-big-grid">
-          <a href="#" class="social-box fb"><i class="fab fa-facebook-f"></i> Facebook</a>
-          <a href="#" class="social-box ig"><i class="fab fa-instagram"></i> Instagram</a>
+          <a href="https://www.facebook.com/profile.php?id=61589878742135&sk=directory_intro" target="_blank" class="social-box fb"><i class="fab fa-facebook-f"></i> Facebook</a>
+          <a href="https://www.instagram.com/artframe57b/" target="_blank" class="social-box ig"><i class="fab fa-instagram"></i> Instagram</a>
+          <a href="https://www.threads.com/@artframe57b" target="_blank" class="social-box th"><i class="fab fa-threads"></i> Threads</a>
           <a href="#" class="social-box tk"><i class="fab fa-tiktok"></i> TikTok</a>
         </div>
       </div>
